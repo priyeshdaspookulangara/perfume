@@ -1,0 +1,57 @@
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  color: var(--muted);
+  text-decoration: none;
+  font-family: 'Tenor Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  transition: all .3s;
+  border-left: 3px solid transparent;
+}
+.admin-nav-link:hover, .admin-nav-link.active {
+  color: var(--gold);
+  background: rgba(196,164,107,0.05);
+  border-left-color: var(--gold);
+}
+
+.admin-card {
+  background: #0d0b07;
+  border: 1px solid var(--border);
+  padding: 24px;
+}
+
+.kpi-card h2 {
+  font-size: 32px;
+  margin-top: 8px;
+}
+
+.kpi-badge {
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.kpi-badge.up { background: rgba(196,164,107,0.15); color: var(--gold); }
+.kpi-badge.down { background: rgba(200,80,80,0.1); color: #c85050; }
+
+table.admin-table thead th {
+  background: #050402;
+  color: var(--gold);
+  font-family: 'Tenor Sans', sans-serif;
+  font-weight: normal;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  border-bottom: 1px solid var(--border);
+  padding: 16px;
+}
+
+table.admin-table tbody td {
+  padding: 16px;
+  border-bottom: 1px solid rgba(196,164,107,0.05);
+  color: var(--cream);
+  font-size: 13px;
+}

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Orders — KOEN</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="bg-black">
+  <div class="grain"></div>
+
+  <!-- Sidebar -->
+  <div id="admin-sidebar-placeholder"></div>
+
+  <!-- Main Content -->
+  <main style="margin-left:240px;padding:40px;min-height:100vh">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <div class="section-label mb-2">Order Fulfillment</div>
+        <h1 class="display-5 font-display">Manage <em>Orders</em></h1>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-gold px-4 py-3 border-0" id="refreshOrders"><i class="bi bi-arrow-clockwise fs-5"></i></button>
+        <button class="btn btn-gold px-4 py-3">EXPORT SHIPMENTS</button>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="admin-card mb-4 py-3">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text bg-transparent border-0 text-gold pe-0 ps-3"><i class="bi bi-search"></i></span>
+            <input type="text" id="orderSearch" class="form-control bg-transparent border-0 text-cream px-3 font-ui small ls-wide shadow-none" placeholder="SEARCH ORDER ID, NAME, CITY...">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-select bg-transparent border-0 text-cream font-ui small ls-wide shadow-none" id="statusFilter">
+            <option value="all" class="bg-dark">ALL STATUSES</option>
+            <option value="placed" class="bg-dark">PLACED</option>
+            <option value="shipped" class="bg-dark">SHIPPED</option>
+            <option value="delivered" class="bg-dark">DELIVERED</option>
+            <option value="cancelled" class="bg-dark">CANCELLED</option>
+          </select>
+        </div>
+        <div class="col-md-3 ms-auto text-end">
+          <small class="text-muted-cream font-ui small ls-wide" id="oCount">0 orders total</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <div class="table-responsive">
+        <table class="table table-borderless admin-table align-middle">
+          <thead>
+            <tr>
+              <th>ORDER ID</th>
+              <th>CUSTOMER</th>
+              <th>DATE</th>
+              <th>ITEMS</th>
+              <th>AMOUNT</th>
+              <th>STATUS</th>
+              <th class="text-end">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="adminOrdersBody">
+            <!-- Rendered by jQuery -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div id="toast-container" style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    $(document).ready(function() {
+      if (!requireAdmin()) return;
+      $("#admin-sidebar-placeholder").load("partials/_admin-sidebar.html", function() {
+        $('.admin-nav-link').removeClass('active');
+        $('#nav-orders').addClass('active');
+      });
+      $('#logoutBtn').on('click', (e) => { e.preventDefault(); logout(); });
+
+      function renderOrders(list) {
+        let html = '';
+        list.forEach(o => {
+          html += `
+            <tr>
+              <td class="font-ui small ls-wide">#${o.id}</td>
+              <td>
+                <div class="font-display fs-5">${o.address.name}</div>
+                <small class="text-muted-cream font-ui small ls-wide" style="font-size: 8px;">${o.address.city.toUpperCase()}</small>
+              </td>
+              <td class="font-ui small text-muted-cream">${new Date(o.date).toLocaleDateString()}</td>
+              <td class="font-ui small text-cream">${o.items.length} items</td>
+              <td class="text-gold font-ui">${o.total}</td>
+              <td>
+                <select class="form-select status-select font-ui small ls-wide py-1 px-2 border-0 bg-dark text-muted-cream" data-id="${o.id}">
+                  <option value="Placed" ${o.status==='Placed'?'selected':''}>PLACED</option>
+                  <option value="Shipped" ${o.status==='Shipped'?'selected':''}>SHIPPED</option>
+                  <option value="Delivered" ${o.status==='Delivered'?'selected':''}>DELIVERED</option>
+                  <option value="Cancelled" ${o.status==='Cancelled'?'selected':''}>CANCELLED</option>
+                </select>
+              </td>
+              <td class="text-end">
+                <a href="admin-order-detail.html?id=${o.id}" class="btn btn-outline-gold btn-sm px-4 py-2" style="font-size: 8px;">VIEW DETAILS</a>
+              </td>
+            </tr>
+          `;
+        });
+        $('#adminOrdersBody').html(html || '<tr><td colspan="7" class="text-center py-5 text-muted">No orders found.</td></tr>');
+        $('#oCount').text(`${list.length} orders total`);
+      }
+
+      const orders = JSON.parse(localStorage.getItem('koen_orders') || '[]');
+      renderOrders(orders);
+
+      // Search & Filter
+      $('#orderSearch, #statusFilter').on('input change', function() {
+        const query = $('#orderSearch').val().toLowerCase();
+        const status = $('#statusFilter').val();
+        let filtered = orders.filter(o => o.id.toLowerCase().includes(query) || o.address.name.toLowerCase().includes(query) || o.address.city.toLowerCase().includes(query));
+        if (status !== 'all') filtered = filtered.filter(o => o.status.toLowerCase() === status);
+        renderOrders(filtered);
+      });
+
+      // Update status
+      $(document).on('change', '.status-select', function() {
+        const id = $(this).data('id');
+        const status = $(this).val();
+        let list = JSON.parse(localStorage.getItem('koen_orders') || '[]');
+        const idx = list.findIndex(o => o.id == id);
+        if (idx > -1) {
+          list[idx].status = status;
+          localStorage.setItem('koen_orders', JSON.stringify(list));
+          showToast(`Order ${id} marked as ${status}`);
+        }
+      });
+
+      $('#refreshOrders').on('click', () => location.reload());
+    });
+  </script>
+</body>
+</html>

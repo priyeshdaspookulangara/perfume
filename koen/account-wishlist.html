@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wishlist — KOEN</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pt-5">
+  <div class="grain"></div>
+  <div id="navbar-placeholder"></div>
+
+  <section class="container-fluid px-4 py-5 mt-5">
+    <div class="row g-5">
+      <!-- Sidebar -->
+      <aside class="col-lg-3 reveal" id="account-sidebar-placeholder"></aside>
+
+      <!-- Content -->
+      <main class="col-lg-9 reveal delay-1">
+        <div class="mb-5">
+          <div class="section-label mb-2">My List</div>
+          <h1 class="display-4 font-display">Saved for <em>Later</em></h1>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4" id="wishlistGrid">
+          <!-- Rendered by jQuery -->
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <div id="cart-drawer-placeholder"></div>
+  <div id="toast-placeholder"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    $(document).ready(function() {
+      if (!requireAuth()) return;
+
+      $("#navbar-placeholder").load("partials/_navbar.html", function() {
+        $(window).trigger('scroll');
+      });
+      $("#footer-placeholder").load("partials/_footer.html");
+      $("#cart-drawer-placeholder").load("partials/_cart-drawer.html");
+      $("#toast-placeholder").load("partials/_toast-container.html");
+
+      const user = getUser();
+      $("#account-sidebar-placeholder").load("partials/_account-sidebar.html", function() {
+        $('#userName').text(user.name);
+        $('#userEmail').text(user.email);
+        $('#userInitials').text(user.name.split(' ').map(n => n[0]).join('').toUpperCase());
+        $('.account-nav-link').removeClass('active');
+        $('#acc-nav-wishlist').addClass('active');
+      });
+
+      // Logout
+      $('#logoutBtn').on('click', (e) => { e.preventDefault(); logout(); });
+
+      function renderWishlist() {
+        const wishlist = getWishlist();
+        let wishHtml = '';
+        wishlist.forEach((id, i) => {
+          const p = KOEN_PRODUCTS.find(x => x.id == id);
+          if (p) {
+            wishHtml += `
+              <div class="col reveal" style="transition-delay: ${i * 0.1}s">
+                <div class="koen-card overflow-hidden">
+                  <a href="product.html?id=${p.id}" class="d-block position-relative">
+                    <img src="${p.image}" class="w-100" style="aspect-ratio: 3/4; object-fit: cover">
+                    <button class="btn btn-outline-gold btn-sm position-absolute top-0 end-0 m-3 remove-wish-btn" data-id="${p.id}" style="padding: 8px 12px; background: rgba(9,8,6,0.5); backdrop-filter: blur(4px)"><i class="bi bi-x-lg"></i></button>
+                  </a>
+                  <div class="p-4">
+                    <small class="text-gold font-ui ls-wider mb-2 d-block">${p.scentFamily}</small>
+                    <h5 class="font-display mb-3 text-truncate">${p.name}</h5>
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                      <span class="fs-5 text-cream font-display">₹${p.price}</span>
+                      <button class="btn btn-gold btn-sm py-2 px-3 add-to-cart-btn" data-id="${p.id}">ADD TO BAG</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+          }
+        });
+        $('#wishlistGrid').html(wishHtml || '<div class="col-12 text-center py-5"><p class="font-display fs-2 fst-italic text-muted">Your wishlist is currently empty.</p><a href="shop.html" class="btn btn-gold mt-4">Browse Collection</a></div>');
+        initReveal();
+      }
+
+      renderWishlist();
+
+      // Remove from wishlist
+      $(document).on('click', '.remove-wish-btn', function(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        toggleWishlist(id, ''); // This will remove since it exists
+        renderWishlist();
+      });
+
+      // Add to cart click
+      $(document).on('click', '.add-to-cart-btn', function(e) {
+        e.preventDefault();
+        const id = $(this).data('id');
+        const p = KOEN_PRODUCTS.find(x => x.id == id);
+        addToCart({
+          id: p.id + '-' + p.sizes[1].ml,
+          name: p.name,
+          size: p.sizes[1].ml + 'ml',
+          price: p.sizes[1].price,
+          image: p.image
+        });
+      });
+
+    });
+  </script>
+</body>
+</html>

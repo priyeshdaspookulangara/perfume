@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Coupons — KOEN</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="bg-black">
+  <div class="grain"></div>
+
+  <!-- Sidebar -->
+  <div id="admin-sidebar-placeholder"></div>
+
+  <!-- Main Content -->
+  <main style="margin-left:240px;padding:40px;min-height:100vh">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <div class="section-label mb-2">Promotional Tools</div>
+        <h1 class="display-5 font-display">Discount <em>Coupons</em></h1>
+      </div>
+      <button class="btn btn-gold px-4 py-3" data-bs-toggle="modal" data-bs-target="#addCouponModal">+ ADD COUPON</button>
+    </div>
+
+    <div class="admin-card">
+      <div class="table-responsive">
+        <table class="table table-borderless admin-table align-middle">
+          <thead>
+            <tr>
+              <th>CODE</th>
+              <th>TYPE</th>
+              <th>VALUE</th>
+              <th>MIN. ORDER</th>
+              <th>USAGE</th>
+              <th class="text-end">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody id="adminCouponsBody">
+            <!-- Rendered by jQuery -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Add Coupon Modal -->
+  <div class="modal fade" id="addCouponModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content admin-card p-0 overflow-hidden" style="border: 1px solid var(--gold) !important">
+        <div class="modal-header border-bottom border-secondary p-4">
+          <h5 class="modal-title font-display fs-3">New Coupon</h5>
+          <button type="button" class="btn btn-link text-cream p-0 border-0" data-bs-dismiss="modal"><i class="bi bi-x-lg fs-5"></i></button>
+        </div>
+        <div class="modal-body p-4">
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="form-floating-gold">
+                <div class="input-group">
+                  <input type="text" class="koen-input" id="cCode" placeholder=" ">
+                  <button class="btn btn-sm btn-outline-gold px-3 ms-2 mt-3" style="font-size: 8px; height: 32px;" onclick="$('#cCode').val(Math.random().toString(36).substring(2, 10).toUpperCase())">GENERATE</button>
+                  <label>Coupon Code</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating-gold">
+                <select class="koen-input bg-dark" id="cType">
+                  <option value="percent">Percentage (%)</option>
+                  <option value="fixed">Fixed Amount (₹)</option>
+                </select>
+                <label>Type</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating-gold">
+                <input type="number" class="koen-input" id="cValue" placeholder=" ">
+                <label>Value</label>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-floating-gold">
+                <input type="number" class="koen-input" id="cMin" placeholder=" ">
+                <label>Minimum Order (₹)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-top border-secondary p-4">
+          <button type="button" class="btn btn-outline-gold px-4 py-2" data-bs-dismiss="modal">CANCEL</button>
+          <button type="button" class="btn btn-gold px-4 py-2" id="saveCoupon">CREATE COUPON</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:flex-end"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    $(document).ready(function() {
+      if (!requireAdmin()) return;
+      $("#admin-sidebar-placeholder").load("partials/_admin-sidebar.html", function() {
+        $('.admin-nav-link').removeClass('active');
+        $('#nav-coupons').addClass('active');
+      });
+      $('#logoutBtn').on('click', (e) => { e.preventDefault(); logout(); });
+
+      function renderCoupons() {
+        let html = '';
+        KOEN_COUPONS.forEach(c => {
+          html += `
+            <tr>
+              <td class="font-ui small ls-wide text-gold">${c.code}</td>
+              <td class="font-ui small text-muted-cream">${c.type.toUpperCase()}</td>
+              <td class="font-display fs-5">${c.type==='percent'?c.value+'%':'₹'+c.value}</td>
+              <td class="font-ui small text-cream">₹${c.minOrder}</td>
+              <td class="font-ui small text-muted-cream">24 times</td>
+              <td class="text-end">
+                <button class="btn btn-outline-gold btn-sm px-3 py-2 delete-c" style="font-size: 8px; border-color: #c85050; color: #c85050"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+          `;
+        });
+        $('#adminCouponsBody').html(html);
+      }
+
+      renderCoupons();
+
+      $('#saveCoupon').on('click', function() {
+        const newC = {
+          code: $('#cCode').val(),
+          type: $('#cType').val(),
+          value: parseInt($('#cValue').val()),
+          minOrder: parseInt($('#cMin').val())
+        };
+        KOEN_COUPONS.push(newC);
+        renderCoupons();
+        bootstrap.Modal.getInstance($('#addCouponModal')).hide();
+        showToast(`Coupon ${newC.code} created`);
+      });
+
+      $(document).on('click', '.delete-c', function() {
+        $(this).closest('tr').fadeOut();
+        showToast('Coupon deleted');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atelier — KOEN</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Tenor+Sans&family=DM+Sans:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-ink text-cream">
+  <div class="grain"></div>
+  <div id="navbar-placeholder"></div>
+
+  <!-- Hero -->
+  <section class="py-5 mt-5">
+    <div class="container py-5 text-center">
+      <div class="reveal">
+        <div class="section-label justify-content-center mb-4">Our Story</div>
+        <h1 class="display-3 font-display mb-4">The KOEN <em>Atelier</em></h1>
+        <p class="lead font-ui ls-wide text-muted-cream mx-auto" style="max-width: 700px;">Born from the ancient traditions of Indian perfumery, reimagined for the modern connoisseur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Sections -->
+  <section class="py-5 container">
+    <div class="row g-5 align-items-center mb-5 pb-5">
+      <div class="col-lg-6 reveal">
+        <img src="https://images.unsplash.com/photo-1615484477201-9f4953340fab?w=800&q=80" alt="Process" class="w-100 object-fit-cover" style="height: 500px;">
+      </div>
+      <div class="col-lg-6 ps-lg-5 reveal delay-1">
+        <h2 class="font-display display-5 mb-4">Pure Essence, <em>Zero</em> Alcohol</h2>
+        <p class="text-muted-cream lh-lg mb-4">Most modern perfumes are 80% alcohol, which evaporates quickly and can irritate the skin. At KOEN, we return to the roots of the 'Attar' tradition. Our perfumes are 100% oil-based, ensuring a scent that stays closer to your skin and lasts significantly longer.</p>
+        <p class="text-muted-cream lh-lg">Each bottle is a concentrated masterpiece, requiring only a few drops to create an aura that lasts from dawn until dusk.</p>
+      </div>
+    </div>
+
+    <div class="row g-5 align-items-center flex-row-reverse">
+      <div class="col-lg-6 reveal">
+        <img src="https://images.unsplash.com/photo-1616948055599-968600539c09?w=800&q=80" alt="Heritage" class="w-100 object-fit-cover" style="height: 500px;">
+      </div>
+      <div class="col-lg-6 pe-lg-5 reveal delay-1">
+        <h2 class="font-display display-5 mb-4">Indian <em>Heritage</em></h2>
+        <p class="text-muted-cream lh-lg mb-4">India has been the cradle of perfumery for millennia. From the sandalwood of the South to the roses of Kannauj, our land is rich with olfactory treasures. KOEN celebrates this heritage by sourcing the finest natural ingredients across the subcontinent.</p>
+        <div class="row g-4 mt-2">
+          <div class="col-6">
+            <h5 class="font-display text-gold">Ethically Sourced</h5>
+            <p class="small text-muted">Supporting local farmers and traditional extraction methods.</p>
+          </div>
+          <div class="col-6">
+            <h5 class="font-display text-gold">Artisan Batches</h5>
+            <p class="small text-muted">Hand-blended in small quantities to ensure absolute purity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics -->
+  <section class="py-5 bg-glass border-top border-bottom border-muted">
+    <div class="container py-5">
+      <div class="row g-4 text-center">
+        <div class="col-md-3 col-6">
+          <h3 class="display-4 font-display text-gold mb-0">12h+</h3>
+          <small class="font-ui ls-wider text-muted">LONGEVITY</small>
+        </div>
+        <div class="col-md-3 col-6">
+          <h3 class="display-4 font-display text-gold mb-0">0%</h3>
+          <small class="font-ui ls-wider text-muted">ALCOHOL</small>
+        </div>
+        <div class="col-md-3 col-6">
+          <h3 class="display-4 font-display text-gold mb-0">100%</h3>
+          <small class="font-ui ls-wider text-muted">VEGAN</small>
+        </div>
+        <div class="col-md-3 col-6">
+          <h3 class="display-4 font-display text-gold mb-0">24/7</h3>
+          <small class="font-ui ls-wider text-muted">AURA</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <div id="cart-drawer-placeholder"></div>
+  <div id="toast-placeholder"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#navbar-placeholder").load("partials/_navbar.html", () => $(window).trigger('scroll'));
+      $("#footer-placeholder").load("partials/_footer.html");
+      $("#cart-drawer-placeholder").load("partials/_cart-drawer.html");
+      $("#toast-placeholder").load("partials/_toast-container.html");
+    });
+  </script>
+</body>
+</html>
