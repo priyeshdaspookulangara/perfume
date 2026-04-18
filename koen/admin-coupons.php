@@ -89,4 +89,23 @@ include 'partials/header.php';
   </div>
 </div>
 
+<script>
+$(document).ready(function() {
+  $('.delete-coupon').on('click', function() {
+    if(confirm('Are you sure you want to delete this coupon?')) {
+      const id = $(this).data('id');
+      const row = $(this).closest('tr');
+      $.post('api/admin-coupon-delete.php', { id: id }, function(res) {
+        if(res.success) {
+          row.fadeOut();
+          showToast('Coupon deleted');
+        } else {
+          showToast(res.message, 'error');
+        }
+      });
+    }
+  });
+});
+</script>
+
 <?php include 'partials/footer.php'; ?>

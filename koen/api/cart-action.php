@@ -44,6 +44,10 @@ switch ($action) {
             $success = true;
         }
         break;
+
+    case 'stats':
+        $success = true;
+        break;
 }
 
 echo json_encode(['success' => $success, 'message' => $message, 'cartCount' => getCartCount(), 'cartTotal' => getCartTotal()]);

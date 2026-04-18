@@ -57,4 +57,23 @@ include 'partials/header.php';
   </main>
 </div>
 
+<script>
+$(document).ready(function() {
+  $('.delete-product').on('click', function() {
+    if(confirm('Are you sure you want to delete this product?')) {
+      const id = $(this).data('id');
+      const row = $(this).closest('tr');
+      $.post('api/admin-product-delete.php', { id: id }, function(res) {
+        if(res.success) {
+          row.fadeOut();
+          showToast('Product deleted');
+        } else {
+          showToast(res.message, 'error');
+        }
+      });
+    }
+  });
+});
+</script>
+
 <?php include 'partials/footer.php'; ?>

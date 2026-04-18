@@ -21,7 +21,8 @@ include 'partials/header.php';
       <div class="col-lg-7">
         <div class="koen-card p-5 border-gold border mb-5">
           <h4 class="font-display fs-3 mb-5">General Configuration</h4>
-          <form action="#" method="POST">
+          <form id="generalSettingsForm">
+            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
             <div class="form-floating-gold mb-4">
               <input type="text" class="koen-input" value="KOEN INDIA" placeholder=" ">
               <label>Store Name</label>
@@ -50,7 +51,8 @@ include 'partials/header.php';
 
         <div class="koen-card p-5 border-gold border">
           <h4 class="font-display fs-3 mb-5">Admin Profile</h4>
-          <form action="#" method="POST">
+          <form id="adminProfileForm">
+            <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>">
             <div class="form-floating-gold mb-4">
               <input type="text" class="koen-input" value="Administrator" placeholder=" ">
               <label>Full Name</label>
@@ -98,5 +100,25 @@ include 'partials/header.php';
   border-color: var(--gold);
 }
 </style>
+
+<script>
+$(document).ready(function() {
+  $('#generalSettingsForm, #adminProfileForm').on('submit', function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: 'api/admin-settings-save.php',
+      method: 'POST',
+      data: $(this).serialize(),
+      success: function(res) {
+        if(res.success) {
+          showToast(res.message);
+        } else {
+          showToast(res.message, 'error');
+        }
+      }
+    });
+  });
+});
+</script>
 
 <?php include 'partials/footer.php'; ?>
