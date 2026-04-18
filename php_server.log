@@ -1,0 +1,80 @@
+[Sat Apr 18 02:46:10 2026] PHP 8.3.6 Development Server (http://localhost:8000) started
+[Sat Apr 18 02:46:11 2026] [::1]:57374 Accepted
+[Sat Apr 18 02:46:11 2026] [::1]:57374 [200]: GET /product.php?id=1
+[Sat Apr 18 02:46:11 2026] [::1]:57374 Closing
+[Sat Apr 18 02:50:08 2026] [::1]:58194 Accepted
+[Sat Apr 18 02:50:08 2026] [::1]:58194 [404]: GET /koen/index.php - No such file or directory
+[Sat Apr 18 02:50:08 2026] [::1]:58194 Closing
+[Sat Apr 18 02:50:57 2026] [::1]:59458 Accepted
+[Sat Apr 18 02:50:57 2026] [::1]:59458 [404]: GET /koen/index.php - No such file or directory
+[Sat Apr 18 02:50:57 2026] [::1]:59458 Closing
+[Sat Apr 18 02:55:26 2026] [::1]:38256 Accepted
+[Sat Apr 18 02:55:26 2026] [::1]:38256 [200]: GET /index.php
+[Sat Apr 18 02:55:26 2026] [::1]:38256 Closing
+[Sat Apr 18 02:55:44 2026] [::1]:49914 Accepted
+[Sat Apr 18 02:55:44 2026] PHP Fatal error:  Uncaught Error: Call to undefined function e() in /app/koen/product.php:37
+Stack trace:
+#0 {main}
+  thrown in /app/koen/product.php on line 37
+[Sat Apr 18 02:55:44 2026] [::1]:49914 [500]: GET /product.php?id=1 - Uncaught Error: Call to undefined function e() in /app/koen/product.php:37
+Stack trace:
+#0 {main}
+  thrown in /app/koen/product.php on line 37
+[Sat Apr 18 02:55:44 2026] [::1]:49914 Closing
+[Sat Apr 18 02:57:15 2026] [::1]:43382 Accepted
+[Sat Apr 18 02:57:15 2026] [::1]:43382 [200]: GET /index.php
+[Sat Apr 18 02:57:15 2026] [::1]:43382 Closing
+[Sat Apr 18 02:57:15 2026] [::1]:43398 Accepted
+[Sat Apr 18 02:57:15 2026] [::1]:43398 [200]: GET /css/style.css
+[Sat Apr 18 02:57:15 2026] [::1]:43398 Closing
+[Sat Apr 18 02:57:15 2026] [::1]:43408 Accepted
+[Sat Apr 18 02:57:15 2026] [::1]:43408 [200]: GET /js/main.js
+[Sat Apr 18 02:57:15 2026] [::1]:43408 Closing
+[Sat Apr 18 02:57:18 2026] [::1]:43414 Accepted
+[Sat Apr 18 02:57:18 2026] PHP Fatal error:  Uncaught Error: Call to undefined function e() in /app/koen/product.php:37
+Stack trace:
+#0 {main}
+  thrown in /app/koen/product.php on line 37
+[Sat Apr 18 02:57:18 2026] [::1]:43414 [500]: GET /product.php?id=1 - Uncaught Error: Call to undefined function e() in /app/koen/product.php:37
+Stack trace:
+#0 {main}
+  thrown in /app/koen/product.php on line 37
+[Sat Apr 18 02:57:18 2026] [::1]:43414 Closing
+[Sat Apr 18 02:57:19 2026] [::1]:43416 Accepted
+[Sat Apr 18 02:57:19 2026] [::1]:43416 [200]: GET /css/style.css
+[Sat Apr 18 02:57:19 2026] [::1]:43416 Closing
+[Sat Apr 18 02:59:06 2026] [::1]:39906 Accepted
+[Sat Apr 18 02:59:06 2026] [::1]:39906 [200]: GET /index.php
+[Sat Apr 18 02:59:06 2026] [::1]:39906 Closing
+[Sat Apr 18 02:59:06 2026] [::1]:39916 Accepted
+[Sat Apr 18 02:59:06 2026] [::1]:39916 [200]: GET /css/style.css
+[Sat Apr 18 02:59:06 2026] [::1]:39916 Closing
+[Sat Apr 18 02:59:06 2026] [::1]:39932 Accepted
+[Sat Apr 18 02:59:06 2026] [::1]:39932 [200]: GET /js/main.js
+[Sat Apr 18 02:59:06 2026] [::1]:39932 Closing
+[Sat Apr 18 02:59:09 2026] [::1]:39948 Accepted
+[Sat Apr 18 02:59:09 2026] PHP Fatal error:  Uncaught Error: Call to undefined function e() in /app/koen/product.php:37
+Stack trace:
+#0 {main}
+  thrown in /app/koen/product.php on line 37
+[Sat Apr 18 02:59:09 2026] [::1]:39948 [500]: GET /product.php?id=1 - Uncaught Error: Call to undefined function e() in /app/koen/product.php:37
+Stack trace:
+#0 {main}
+  thrown in /app/koen/product.php on line 37
+[Sat Apr 18 02:59:09 2026] [::1]:39948 Closing
+[Sat Apr 18 02:59:09 2026] [::1]:39964 Accepted
+[Sat Apr 18 02:59:09 2026] [::1]:39964 [200]: GET /css/style.css
+[Sat Apr 18 02:59:09 2026] [::1]:39964 Closing
+[Sat Apr 18 03:00:50 2026] [::1]:49900 Accepted
+[Sat Apr 18 03:00:50 2026] PHP Fatal error:  Uncaught Error: Call to undefined function e() in /app/koen/product.php:37
+Stack trace:
+#0 {main}
+  thrown in /app/koen/product.php on line 37
+[Sat Apr 18 03:00:50 2026] [::1]:49900 [500]: GET /product.php?id=1 - Uncaught Error: Call to undefined function e() in /app/koen/product.php:37
+Stack trace:
+#0 {main}
+  thrown in /app/koen/product.php on line 37
+[Sat Apr 18 03:00:50 2026] [::1]:49900 Closing
+[Sat Apr 18 03:03:42 2026] [::1]:49836 Accepted
+[Sat Apr 18 03:03:42 2026] [::1]:49836 [200]: GET /product.php?id=1
+[Sat Apr 18 03:03:42 2026] [::1]:49836 Closing

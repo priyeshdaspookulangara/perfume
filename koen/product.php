@@ -34,7 +34,7 @@ if (empty($images)) $images[] = ['image_url' => $product['image']];
     <ol class="breadcrumb font-ui small ls-wide">
       <li class="breadcrumb-item"><a href="index.php" class="text-muted text-decoration-none">Home</a></li>
       <li class="breadcrumb-item"><a href="shop.php" class="text-muted text-decoration-none">Collection</a></li>
-      <li class="breadcrumb-item text-gold active"><?php echo $product['name']; ?></li>
+      <li class="breadcrumb-item text-gold active"><?php echo e($product['name']); ?></li>
     </ol>
   </nav>
 
@@ -43,11 +43,11 @@ if (empty($images)) $images[] = ['image_url' => $product['image']];
     <div class="col-lg-6">
       <div class="position-sticky top-100">
         <div class="main-img-container mb-3 overflow-hidden">
-          <img id="mainImg" src="<?php echo $images[0]['image_url']; ?>" class="w-100 reveal" style="height: 600px; object-fit: cover;">
+          <img id="mainImg" src="<?php echo e($images[0]['image_url']); ?>" class="w-100 reveal" style="height: 600px; object-fit: cover;">
         </div>
         <div class="d-flex gap-2">
           <?php foreach($images as $img): ?>
-          <img src="<?php echo $img['image_url']; ?>" class="thumb-img reveal" style="width: 80px; height: 100px; object-fit: cover; cursor: pointer; border: 1px solid transparent; transition: all 0.3s;" data-src="<?php echo $img['image_url']; ?>">
+          <img src="<?php echo e($img['image_url']); ?>" class="thumb-img reveal" style="width: 80px; height: 100px; object-fit: cover; cursor: pointer; border: 1px solid transparent; transition: all 0.3s;" data-src="<?php echo e($img['image_url']); ?>">
           <?php endforeach; ?>
         </div>
       </div>
@@ -55,8 +55,8 @@ if (empty($images)) $images[] = ['image_url' => $product['image']];
 
     <!-- Product Info -->
     <div class="col-lg-6 p-lg-5">
-      <span class="badge border border-gold text-gold rounded-pill px-3 py-2 small mb-4 ls-wide font-ui"><?php echo $product['scent_family']; ?></span>
-      <h1 class="font-display display-3 mb-3 reveal"><?php echo $product['name']; ?></h1>
+      <span class="badge border border-gold text-gold rounded-pill px-3 py-2 small mb-4 ls-wide font-ui"><?php echo e($product['scent_family']); ?></span>
+      <h1 class="font-display display-3 mb-3 reveal"><?php echo e($product['name']); ?></h1>
       <div class="d-flex align-items-center gap-3 mb-4 reveal">
         <div class="text-gold">
           <?php
@@ -66,7 +66,7 @@ if (empty($images)) $images[] = ['image_url' => $product['image']];
           }
           ?>
         </div>
-        <small class="text-muted-cream font-ui ls-wide">(<?php echo $product['review_count']; ?> reviews)</small>
+        <small class="text-muted-cream font-ui ls-wide">(<?php echo e($product['review_count']); ?> reviews)</small>
       </div>
 
       <div class="price-block mb-5 reveal">
@@ -79,22 +79,22 @@ if (empty($images)) $images[] = ['image_url' => $product['image']];
       <hr style="border-color: var(--border) !important;">
 
       <div class="scent-story my-5 reveal">
-        <blockquote class="font-display fs-4 fst-italic text-muted-cream mb-0">"<?php echo $product['scent_story']; ?>"</blockquote>
+        <blockquote class="font-display fs-4 fst-italic text-muted-cream mb-0">"<?php echo e($product['scent_story']); ?>"</blockquote>
       </div>
 
       <!-- Notes Pyramid -->
       <div class="row g-4 mb-5 reveal">
         <div class="col-4">
           <h6 class="font-ui text-gold small ls-wider mb-2">TOP</h6>
-          <p class="small text-muted-cream mb-0"><?php echo $product['top_notes']; ?></p>
+          <p class="small text-muted-cream mb-0"><?php echo e($product['top_notes']); ?></p>
         </div>
         <div class="col-4">
           <h6 class="font-ui text-gold small ls-wider mb-2">HEART</h6>
-          <p class="small text-muted-cream mb-0"><?php echo $product['heart_notes']; ?></p>
+          <p class="small text-muted-cream mb-0"><?php echo e($product['heart_notes']); ?></p>
         </div>
         <div class="col-4">
           <h6 class="font-ui text-gold small ls-wider mb-2">BASE</h6>
-          <p class="small text-muted-cream mb-0"><?php echo $product['base_notes']; ?></p>
+          <p class="small text-muted-cream mb-0"><?php echo e($product['base_notes']); ?></p>
         </div>
       </div>
 
@@ -104,10 +104,10 @@ if (empty($images)) $images[] = ['image_url' => $product['image']];
         <div class="d-flex gap-3" id="sizeSelector">
           <?php foreach($sizes as $idx => $s): ?>
           <button class="btn btn-outline-gold size-btn flex-fill py-3 <?php echo $idx==1 || (count($sizes)==1 && $idx==0) ? 'active' : ''; ?>"
-                  data-ml="<?php echo $s['ml']; ?>"
-                  data-id="<?php echo $s['id']; ?>"
-                  data-price="<?php echo $s['price']; ?>">
-            <?php echo $s['ml']; ?>ml — <?php echo formatPrice($s['price']); ?>
+                  data-ml="<?php echo e($s['ml']); ?>"
+                  data-id="<?php echo e($s['id']); ?>"
+                  data-price="<?php echo e($s['price']); ?>">
+            <?php echo e($s['ml']); ?>ml — <?php echo formatPrice($s['price']); ?>
           </button>
           <?php endforeach; ?>
         </div>
@@ -123,7 +123,7 @@ if (empty($images)) $images[] = ['image_url' => $product['image']];
           </div>
         </div>
         <div class="col-md-9">
-          <button class="btn btn-gold w-100 h-100 py-3" id="addToCartBtn" data-id="<?php echo $product['id']; ?>">Add to Bag</button>
+          <button class="btn btn-gold w-100 h-100 py-3" id="addToCartBtn" data-id="<?php echo e($product['id']); ?>">Add to Bag</button>
         </div>
       </div>
 
@@ -137,7 +137,7 @@ if (empty($images)) $images[] = ['image_url' => $product['image']];
           </h2>
           <div id="descCollapse" class="accordion-collapse collapse" data-bs-parent="#pdpAccordion">
             <div class="accordion-body text-muted-cream small font-ui ls-wide lh-lg px-0">
-              <?php echo $product['description']; ?>
+              <?php echo e($product['description']); ?>
             </div>
           </div>
         </div>
